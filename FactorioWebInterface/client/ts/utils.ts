@@ -34,12 +34,12 @@ export class Utils {
     }
 
     static formatDate(date: Date): string {
-        let year = this.pad(date.getUTCFullYear());
-        let month = this.pad(date.getUTCMonth() + 1);
-        let day = this.pad(date.getUTCDate());
-        let hour = this.pad(date.getUTCHours());
-        let min = this.pad(date.getUTCMinutes());
-        let sec = this.pad(date.getUTCSeconds());
+        let year = this.pad(date.getFullYear());
+        let month = this.pad(date.getMonth() + 1);
+        let day = this.pad(date.getDate());
+        let hour = this.pad(date.getHours());
+        let min = this.pad(date.getMinutes());
+        let sec = this.pad(date.getSeconds());
         return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
     }
 

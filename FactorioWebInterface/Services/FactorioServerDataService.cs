@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+//using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -57,7 +57,7 @@ namespace FactorioWebInterface.Services
         {
             _logger = logger;
 
-            BaseDirectoryPath = Path.GetFullPath("/factorio/");
+            BaseDirectoryPath = Path.GetFullPath("/home/steam/serverfiles/factorio/");
             BasePublicDirectoryPath = Path.GetFullPath(Path.Combine(BaseDirectoryPath, Constants.PublicDirectoryName));
             GlobalSavesDirectoryPath = Path.GetFullPath(Path.Combine(BaseDirectoryPath, Constants.GlobalSavesDirectoryName));
             ScenarioDirectoryPath = Path.GetFullPath(Path.Combine(BaseDirectoryPath, Constants.ScenarioDirectoryName));
@@ -73,7 +73,7 @@ namespace FactorioWebInterface.Services
 #elif WSL
             FactorioWrapperPath = "/mnt/c/Projects/FactorioWebInterface/FactorioWrapper/bin/Wsl/netcoreapp3.1/publish/FactorioWrapper";
 #else
-            FactorioWrapperPath = $"/factorio/{factorioServerDataConfiguration.FactorioWrapperName}/FactorioWrapper";
+            FactorioWrapperPath = "/home/steam/serverfiles/FactorioWebInterface/FactorioWrapper";
 #endif
 
             validSaveDirectories.Add(Constants.GlobalSavesDirectoryName);
@@ -142,7 +142,7 @@ namespace FactorioWebInterface.Services
             return validSaveDirectories.Contains(path);
         }
 
-        public bool TryGetServerData(string serverId, [MaybeNullWhen(false)] out FactorioServerData serverData)
+        public bool TryGetServerData(string serverId, out FactorioServerData serverData)
         {
             return servers.TryGetValue(serverId, out serverData!);
         }

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿//using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 
@@ -6,7 +6,7 @@ namespace FactorioWebInterface.Models
 {
     public static class ModParser
     {
-        public static bool TryGetNameAndVersion(string fileName, [NotNullWhen(true)]  out string? modName, [NotNullWhen(true)] out string? version)
+        public static bool TryGetNameAndVersion(string fileName, out string? modName, out string? version)
         {
             modName = null;
             version = null;

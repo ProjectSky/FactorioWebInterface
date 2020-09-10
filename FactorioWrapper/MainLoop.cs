@@ -227,7 +227,7 @@ namespace FactorioWrapper
 
                 if (status == FactorioServerStatus.Running)
                 {
-                    var now = DateTime.UtcNow;
+                    var now = DateTime.Now;
                     var diff = now - lastUpdateTime;
                     if (diff >= updateTimeInterval)
                     {
@@ -461,7 +461,7 @@ namespace FactorioWrapper
                     {
                         await ConnectRCON();
 
-                        lastUpdateTime = DateTime.UtcNow;
+                        lastUpdateTime = DateTime.Now;
                         string command = BuildCurentTimeCommand(lastUpdateTime);
                         _ = SendToFactorio(command);
 
@@ -470,7 +470,7 @@ namespace FactorioWrapper
 #else
                     if (line.StartsWith("Factorio initialised"))
                     {
-                        lastUpdateTime = DateTime.UtcNow;
+                        lastUpdateTime = DateTime.Now;
                         string command = BuildCurentTimeCommand(lastUpdateTime);
                         _ = SendToFactorio(command);
 
@@ -499,13 +499,13 @@ namespace FactorioWrapper
 
         private void SendFactorioOutputData(string data)
         {
-            DateTime now = DateTime.UtcNow;
+            DateTime now = DateTime.Now;
             messageQueue.Enqueue(async () => await connection.InvokeAsync(nameof(IFactorioProcessServerMethods.SendFactorioOutputDataWithDateTime), data, now));
         }
 
         private void SendWrapperData(string data)
         {
-            DateTime now = DateTime.UtcNow;
+            DateTime now = DateTime.Now;
             messageQueue.Enqueue(async () => await connection.InvokeAsync(nameof(IFactorioProcessServerMethods.SendWrapperDataWithDateTime), data, now));
         }
 
@@ -535,7 +535,7 @@ namespace FactorioWrapper
             {
                 Log.Information("Sending Factorio status changed from {oldStatus} to {newStatus}", oldStatus, newStatus);
 
-                var now = DateTime.UtcNow;
+                var now = DateTime.Now;
                 await connection.InvokeAsync(nameof(IFactorioProcessServerMethods.StatusChangedWithDateTime), newStatus, oldStatus, now);
 
                 return true;
@@ -551,7 +551,7 @@ namespace FactorioWrapper
         {
             try
             {
-                var now = DateTime.UtcNow;
+                var now = DateTime.Now;
                 await connection.InvokeAsync(nameof(IFactorioProcessServerMethods.RegisterServerIdWithDateTime), serverId, now);
 
                 return true;
@@ -620,7 +620,7 @@ namespace FactorioWrapper
         private static string BuildCurentTimeCommand(DateTime now)
         {
             var timeStamp = (int)(now - unixEpoch).TotalSeconds;
-            return $"/silent-command local s = ServerCommands s = s and s.set_time({timeStamp})";
+            return $"/exec local s = ServerCommands s = s and s.set_time({timeStamp})";
         }
 
         private bool disposed = false;

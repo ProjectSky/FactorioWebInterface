@@ -16,7 +16,7 @@ namespace FactorioWrapper
         //private const string url = "http://88.99.214.198/factorioProcessHub";
 
         // If the wrapper is on the same ip as the web interface only localhost seems to work. Before the ip worked, but not anymore.
-        private const string url = "http://localhost/factorioProcessHub";
+        private const string url = "http://localhost:5000/factorioProcessHub";
 #endif
 
         public static void Main(string[] args)

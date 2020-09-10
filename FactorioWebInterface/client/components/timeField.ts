@@ -25,7 +25,7 @@ export class TimeField extends InputFieldBase {
         }
 
         let time = new Date(value);
-        time.setUTCHours(time.getUTCHours(), time.getUTCMinutes(), time.getUTCSeconds(), 0);
+        time.setHours(time.getHours(), time.getMinutes(), time.getSeconds(), 0);
         this._input.valueAsDate = time;
     }
 

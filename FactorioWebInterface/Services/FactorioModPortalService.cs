@@ -63,7 +63,8 @@ namespace FactorioWebInterface.Services
             {
                 if (ModParser.TryGetNameAndVersion(fileName, out string? modName, out string? version))
                 {
-                    fileNameToModAndVersionMap[fileName] = (modName, version);
+                    (string? modName, string? version) p = (modName, version);
+                    fileNameToModAndVersionMap[fileName] = p;
                 }
                 else
                 {

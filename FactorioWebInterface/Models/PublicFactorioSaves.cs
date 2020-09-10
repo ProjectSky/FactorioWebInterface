@@ -72,8 +72,8 @@ namespace FactorioWebInterface.Models
                     {
                         Name = f.Name,
                         Directory = directoryName,
-                        CreatedTime = f.CreationTimeUtc,
-                        LastModifiedTime = f.LastWriteTimeUtc,
+                        CreatedTime = f.CreationTime,
+                        LastModifiedTime = f.LastWriteTime,
                         Size = f.Length
                     })
                     .ToArray();

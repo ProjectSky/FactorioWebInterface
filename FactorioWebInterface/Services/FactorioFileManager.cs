@@ -179,8 +179,8 @@ namespace FactorioWebInterface.Services
                     new ScenarioMetaData()
                     {
                         Name = d.Name,
-                        CreatedTime = d.CreationTimeUtc,
-                        LastModifiedTime = d.LastWriteTimeUtc
+                        CreatedTime = d.CreationTime,
+                        LastModifiedTime = d.LastWriteTime
                     }
                 ).ToArray();
             }
@@ -293,8 +293,8 @@ namespace FactorioWebInterface.Services
                     {
                         Name = f.Name,
                         Directory = directory,
-                        CreatedTime = f.CreationTimeUtc,
-                        LastModifiedTime = f.LastWriteTimeUtc,
+                        CreatedTime = f.CreationTime,
+                        LastModifiedTime = f.LastWriteTime,
                         Size = f.Length
                     })
                     .ToArray();
@@ -482,8 +482,8 @@ namespace FactorioWebInterface.Services
                     var fileMetaData = new FileMetaData()
                     {
                         Name = fi.Name,
-                        CreatedTime = fi.CreationTimeUtc,
-                        LastModifiedTime = fi.LastWriteTimeUtc,
+                        CreatedTime = fi.CreationTime,
+                        LastModifiedTime = fi.LastWriteTime,
                         Size = fi.Length,
                         Directory = Constants.LocalSavesDirectoryName
                     };
@@ -553,8 +553,8 @@ namespace FactorioWebInterface.Services
                     var fileMetaData = new FileMetaData()
                     {
                         Name = fi.Name,
-                        CreatedTime = fi.CreationTimeUtc,
-                        LastModifiedTime = fi.LastWriteTimeUtc,
+                        CreatedTime = fi.CreationTime,
+                        LastModifiedTime = fi.LastWriteTime,
                         Size = fi.Length,
                         Directory = dirName
                     };
@@ -691,8 +691,8 @@ namespace FactorioWebInterface.Services
                     var oldFileMetaDdata = new FileMetaData()
                     {
                         Name = sourceFile.Name,
-                        CreatedTime = sourceFile.CreationTimeUtc,
-                        LastModifiedTime = sourceFile.LastWriteTimeUtc,
+                        CreatedTime = sourceFile.CreationTime,
+                        LastModifiedTime = sourceFile.LastWriteTime,
                         Size = sourceFile.Length,
                         Directory = sourceFile.Directory.Name
                     };
@@ -721,8 +721,8 @@ namespace FactorioWebInterface.Services
                         var newFileMetaData = new FileMetaData()
                         {
                             Name = destinationFileInfo.Name,
-                            CreatedTime = destinationFileInfo.CreationTimeUtc,
-                            LastModifiedTime = destinationFileInfo.LastWriteTimeUtc,
+                            CreatedTime = destinationFileInfo.CreationTime,
+                            LastModifiedTime = destinationFileInfo.LastWriteTime,
                             Size = destinationFileInfo.Length,
                             Directory = destinationFileInfo.Directory.Name
                         };
@@ -853,7 +853,7 @@ namespace FactorioWebInterface.Services
                     }
 
                     sourceFile.CopyTo(destinationFilePath);
-                    destinationFileInfo.LastWriteTimeUtc = sourceFile.LastWriteTimeUtc;
+                    destinationFileInfo.LastWriteTime = sourceFile.LastWriteTime;
 
 
                     if (trackDestination)
@@ -863,8 +863,8 @@ namespace FactorioWebInterface.Services
                         var newFileMetaData = new FileMetaData()
                         {
                             Name = destinationFileInfo.Name,
-                            CreatedTime = destinationFileInfo.CreationTimeUtc,
-                            LastModifiedTime = destinationFileInfo.LastWriteTimeUtc,
+                            CreatedTime = destinationFileInfo.CreationTime,
+                            LastModifiedTime = destinationFileInfo.LastWriteTime,
                             Size = destinationFileInfo.Length,
                             Directory = destinationFileInfo.Directory.Name
                         };
@@ -970,8 +970,8 @@ namespace FactorioWebInterface.Services
                 var oldFileMetaDdata = new FileMetaData()
                 {
                     Name = fileInfo.Name,
-                    CreatedTime = fileInfo.CreationTimeUtc,
-                    LastModifiedTime = fileInfo.LastWriteTimeUtc,
+                    CreatedTime = fileInfo.CreationTime,
+                    LastModifiedTime = fileInfo.LastWriteTime,
                     Size = fileInfo.Length,
                     Directory = dirName
                 };
@@ -982,8 +982,8 @@ namespace FactorioWebInterface.Services
                 var newFileMetaData = new FileMetaData()
                 {
                     Name = newFileInfo.Name,
-                    CreatedTime = newFileInfo.CreationTimeUtc,
-                    LastModifiedTime = newFileInfo.LastWriteTimeUtc,
+                    CreatedTime = newFileInfo.CreationTime,
+                    LastModifiedTime = newFileInfo.LastWriteTime,
                     Size = newFileInfo.Length,
                     Directory = dirName
                 };
@@ -1021,7 +1021,7 @@ namespace FactorioWebInterface.Services
         }
         private static string MakeLogFilePath(FileInfo file, DirectoryInfo logDirectory)
         {
-            string timeStamp = file.CreationTimeUtc.ToString("yyyyMMddHHmmss");
+            string timeStamp = file.CreationTime.ToString("yyyyMMddHHmmss");
             string logName = Path.GetFileNameWithoutExtension(file.Name);
 
             return Path.Combine(logDirectory.FullName, $"{logName}{timeStamp}.log");
@@ -1077,7 +1077,7 @@ namespace FactorioWebInterface.Services
                 if (!currentLog.Exists)
                 {
                     using (_ = currentLog.Create()) { }
-                    currentLog.CreationTimeUtc = DateTime.UtcNow;
+                    currentLog.CreationTime = DateTime.Now;
 
                     var filesChanged = new FilesChanged(new[] { BuildCurrentLogFileMetaData(currentLog, serverId) });
                     return Result<FilesChanged>.OK(filesChanged);
@@ -1085,7 +1085,7 @@ namespace FactorioWebInterface.Services
 
                 if (currentLog.Length == 0)
                 {
-                    currentLog.CreationTimeUtc = DateTime.UtcNow;
+                    currentLog.CreationTime = DateTime.Now;
 
                     var filesChanged = new FilesChanged(new[] { BuildCurrentLogFileMetaData(currentLog, serverId) });
                     return Result<FilesChanged>.OK(filesChanged);
@@ -1103,7 +1103,7 @@ namespace FactorioWebInterface.Services
 
                 var newFile = new FileInfo(serverData.CurrentLogPath);
                 using (_ = newFile.Create()) { }
-                newFile.CreationTimeUtc = DateTime.UtcNow;
+                newFile.CreationTime = DateTime.Now;
 
                 var logs = dir.GetFiles("*.log");
 
@@ -1125,7 +1125,7 @@ namespace FactorioWebInterface.Services
                 }
 
                 // sort oldest first.
-                Array.Sort(logs, (a, b) => a.CreationTimeUtc.CompareTo(b.CreationTimeUtc));
+                Array.Sort(logs, (a, b) => a.CreationTime.CompareTo(b.CreationTime));
                 var oldLogs = new List<FileMetaData>();
 
                 for (int i = 0; i < removeCount && i < logs.Length; i++)
@@ -1174,7 +1174,7 @@ namespace FactorioWebInterface.Services
         {
             void BuildLogger(FileInfo file)
             {
-                file.CreationTimeUtc = DateTime.UtcNow;
+                file.CreationTime = DateTime.Now;
 
                 serverData.ChatLogger = new LoggerConfiguration()
                         .MinimumLevel.Information()
@@ -1247,7 +1247,7 @@ namespace FactorioWebInterface.Services
                 }
 
                 // sort oldest first.
-                Array.Sort(logs, (a, b) => a.CreationTimeUtc.CompareTo(b.CreationTimeUtc));
+                Array.Sort(logs, (a, b) => a.CreationTime.CompareTo(b.CreationTime));
                 var oldLogs = new List<FileMetaData>();
 
                 for (int i = 0; i < removeCount && i < logs.Length; i++)
@@ -1342,7 +1342,7 @@ namespace FactorioWebInterface.Services
             DateTime ChangeLastTime(FactorioServerMutableData md)
             {
                 DateTime lastChecked = md.LastTempFilesChecked;
-                md.LastTempFilesChecked = DateTime.UtcNow;
+                md.LastTempFilesChecked = DateTime.Now;
 
                 return lastChecked;
             }
@@ -1362,12 +1362,12 @@ namespace FactorioWebInterface.Services
                     }
 
                     var files = dir.EnumerateFiles()
-                        .Where(f => f.LastWriteTimeUtc >= lastChecked)
+                        .Where(f => f.LastWriteTime >= lastChecked)
                         .Select(f => new FileMetaData()
                         {
                             Name = f.Name,
-                            CreatedTime = f.CreationTimeUtc,
-                            LastModifiedTime = f.LastWriteTimeUtc,
+                            CreatedTime = f.CreationTime,
+                            LastModifiedTime = f.LastWriteTime,
                             Size = f.Length,
                             Directory = Constants.TempSavesDirectoryName
                         })
@@ -1413,8 +1413,8 @@ namespace FactorioWebInterface.Services
             {
                 Name = file.Name,
                 Directory = Path.Combine(serverId, file.Directory.Name),
-                CreatedTime = file.CreationTimeUtc,
-                LastModifiedTime = file.LastWriteTimeUtc,
+                CreatedTime = file.CreationTime,
+                LastModifiedTime = file.LastWriteTime,
                 Size = file.Length
             };
         }
@@ -1425,8 +1425,8 @@ namespace FactorioWebInterface.Services
             {
                 Name = file.Name,
                 Directory = serverId,
-                CreatedTime = file.CreationTimeUtc,
-                LastModifiedTime = file.LastWriteTimeUtc,
+                CreatedTime = file.CreationTime,
+                LastModifiedTime = file.LastWriteTime,
                 Size = file.Length
             };
         }

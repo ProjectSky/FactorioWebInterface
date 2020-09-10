@@ -348,9 +348,9 @@ namespace FactorioWebInterface.Services
 
             string name = SanitizeDiscordChat(eventArgs.User.Username);
             string message = SanitizeDiscordChat(eventArgs.Message);
-            string data = $"/silent-command game.print('[Discord] {name}: {message}')";
+            string data = $"/exec game.print('[Discord] {name}: {message}')";
 
-            LogChat(serverData, $"[Discord] {name}: {message}", DateTime.UtcNow);
+            LogChat(serverData, $"[Discord] {name}: {message}", DateTime.Now);
 
             _ = serverData.LockAsync(md =>
             {
@@ -764,7 +764,7 @@ namespace FactorioWebInterface.Services
                             Title = "Status:",
                             Description = $"Server has **updated** to version {version}",
                             Color = DiscordColors.updateColor,
-                            Timestamp = DateTimeOffset.UtcNow
+                            Timestamp = DateTimeOffset.Now
                         };
                         _ = _discordService.SendToConnectedChannel(serverId, embed: embed.Build());
 
@@ -994,7 +994,7 @@ namespace FactorioWebInterface.Services
                         {
                             Description = content,
                             Color = DiscordColors.infoColor,
-                            Timestamp = DateTimeOffset.UtcNow
+                            Timestamp = DateTimeOffset.Now
                         };
 
                         _ = _discordService.SendToConnectedChannel(serverId, embed: embed.Build());
@@ -1008,7 +1008,7 @@ namespace FactorioWebInterface.Services
                         {
                             Description = content,
                             Color = DiscordColors.infoColor,
-                            Timestamp = DateTimeOffset.UtcNow
+                            Timestamp = DateTimeOffset.Now
                         };
 
                         _ = _discordService.SendToConnectedChannel(serverId, embed: embed.Build());
@@ -1024,7 +1024,7 @@ namespace FactorioWebInterface.Services
                         {
                             Description = content,
                             Color = DiscordColors.infoColor,
-                            Timestamp = DateTimeOffset.UtcNow
+                            Timestamp = DateTimeOffset.Now
                         };
 
                         _ = _discordService.SendToAdminChannel(embed: embed.Build());
@@ -1038,7 +1038,7 @@ namespace FactorioWebInterface.Services
                         {
                             Description = content,
                             Color = DiscordColors.infoColor,
-                            Timestamp = DateTimeOffset.UtcNow
+                            Timestamp = DateTimeOffset.Now
                         };
 
                         _ = _discordService.SendToAdminChannel(embed: embed.Build());
@@ -1574,14 +1574,14 @@ namespace FactorioWebInterface.Services
                     MessageType = Models.MessageType.Output
                 };
 
-                LogChat(sourceServerData, messageData.Message, DateTime.UtcNow);
+                LogChat(sourceServerData, messageData.Message, DateTime.Now);
 
                 await sourceServerData.LockAsync(md =>
                 {
                     if (md.Status == FactorioServerStatus.Running)
                     {
                         string message = SanitizeDiscordChat(data);
-                        string command = $"/silent-command game.print('[Server] {actor}: {message}')";
+                        string command = $"/exec game.print('[Server] {actor}: {message}')";
                         _ = SendToFactorioProcess(serverId, command);
 
                         FactorioServerUtils.SendMessage(md, _factorioControlHub, messageData);
@@ -1635,7 +1635,7 @@ namespace FactorioWebInterface.Services
                 Title = "Status:",
                 Description = "Server has **started**",
                 Color = DiscordColors.successColor,
-                Timestamp = DateTimeOffset.UtcNow
+                Timestamp = DateTimeOffset.Now
             };
             _ = _discordService.SendToConnectedChannel(serverId, embed: embed.Build());
 
@@ -1643,7 +1643,7 @@ namespace FactorioWebInterface.Services
 
             LogChat(serverData, "[SERVER-STARTED]", dateTime);
 
-            await serverData.LockAsync(md => md.StartTime = DateTime.UtcNow);
+            await serverData.LockAsync(md => md.StartTime = DateTime.Now);
 
             await processTask;
             await ServerConnected(serverData);
@@ -1676,7 +1676,7 @@ namespace FactorioWebInterface.Services
 
         private async Task MarkChannelOffline(FactorioServerData serverData)
         {
-            _ = _discordService.ScheduleUpdateChannelNameAndTopic(serverData.ServerId);
+            await _discordService.ScheduleUpdateChannelNameAndTopic(serverData.ServerId);
         }
 
         public async Task StatusChanged(string serverId, FactorioServerStatus newStatus, FactorioServerStatus oldStatus, DateTime dateTime)
@@ -1717,7 +1717,7 @@ namespace FactorioWebInterface.Services
                     Title = "Status:",
                     Description = "Server has **stopped**",
                     Color = DiscordColors.infoColor,
-                    Timestamp = DateTimeOffset.UtcNow
+                    Timestamp = DateTimeOffset.Now
                 };
                 _ = _discordService.SendToConnectedChannel(serverId, embed: embed.Build());
 
@@ -1746,13 +1746,13 @@ namespace FactorioWebInterface.Services
                     Title = "Status:",
                     Description = "Server has **crashed**",
                     Color = DiscordColors.failureColor,
-                    Timestamp = DateTimeOffset.UtcNow
+                    Timestamp = DateTimeOffset.Now
                 };
 
                 var startTime = await serverData.LockAsync(md => md.ServerExtraSettings.PingDiscordCrashRole ? md.StartTime : default);
 
                 string? mention = null;
-                if (startTime != default && (DateTime.UtcNow - startTime) >= crashStartTimeCooldown)
+                if (startTime != default && (DateTime.Now - startTime) >= crashStartTimeCooldown)
                 {
                     mention = _discordService.CrashRoleMention;
                 }
@@ -2351,8 +2351,8 @@ namespace FactorioWebInterface.Services
                         var data = new FileMetaData()
                         {
                             Name = newFileInfo.Name,
-                            CreatedTime = newFileInfo.CreationTimeUtc,
-                            LastModifiedTime = newFileInfo.LastWriteTimeUtc,
+                            CreatedTime = newFileInfo.CreationTime,
+                            LastModifiedTime = newFileInfo.LastWriteTime,
                             Directory = dirName,
                             Size = newFileInfo.Length
                         };

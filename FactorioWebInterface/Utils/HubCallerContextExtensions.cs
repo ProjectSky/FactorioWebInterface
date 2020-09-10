@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.SignalR;
-using System.Diagnostics.CodeAnalysis;
+//using System.Diagnostics.CodeAnalysis;
 
 namespace FactorioWebInterface.Utils
 {
@@ -17,7 +17,7 @@ namespace FactorioWebInterface.Utils
             }
         }
 
-        public static bool TryGetData<T>(this HubCallerContext context, [MaybeNull] out T data)
+        public static bool TryGetData<T>(this HubCallerContext context, out T data)
         {
             if (context.Items.TryGetValue(typeof(T), out object? obj))
             {

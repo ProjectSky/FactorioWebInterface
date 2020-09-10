@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using Serilog;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO.Abstractions;
 using System.Security.Claims;
@@ -37,6 +38,7 @@ namespace FactorioWebInterface
             // This is the key used to sign JwtBearer tokens.
             var data = Encoding.ASCII.GetBytes(configuration[Constants.SecurityKey]);
             SecurityKey = new SymmetricSecurityKey(data);
+            Log.Information(string.Format("Servers Toekn: {0}", GenerateToken()));
         }
 
         public IConfiguration Configuration { get; }

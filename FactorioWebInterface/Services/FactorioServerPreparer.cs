@@ -108,13 +108,13 @@ namespace FactorioWebInterface.Services
                         string copyToPath = Path.Combine(mutableData.TempSavesDirectoryPath, saveFile.Name);
                         var fi = saveFile.CopyTo(copyToPath, true);
 
-                        fi.LastWriteTimeUtc = DateTime.UtcNow;
+                        fi.LastWriteTime = DateTime.Now;
 
                         var data = new FileMetaData()
                         {
                             Name = fi.Name,
-                            CreatedTime = fi.CreationTimeUtc,
-                            LastModifiedTime = fi.LastWriteTimeUtc,
+                            CreatedTime = fi.CreationTime,
+                            LastModifiedTime = fi.LastWriteTime,
                             Size = fi.Length,
                             Directory = Constants.TempSavesDirectoryName
                         };
@@ -264,7 +264,7 @@ namespace FactorioWebInterface.Services
             mutableData.OnlinePlayerCount = 0;
 
             mutableData.StopCallback = null;
-            mutableData.LastTempFilesChecked = DateTime.UtcNow;
+            mutableData.LastTempFilesChecked = DateTime.Now;
             mutableData.StartTime = default;
         }
 

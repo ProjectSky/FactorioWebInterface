@@ -69,7 +69,7 @@ namespace FactorioWebInterface.Models
                 reason = reason.Substring(0, reason.Length - 1);
             }
 
-            return new ParsedBan(player, reason, admin, DateTime.UtcNow);
+            return new ParsedBan(player, reason, admin, DateTime.Now);
         }
 
         public static ParsedBan? FromBanCommand(string content, string actor)
@@ -97,7 +97,7 @@ namespace FactorioWebInterface.Models
                 reason = "unspecified.";
             }
 
-            return new ParsedBan(player, reason, actor, DateTime.UtcNow);
+            return new ParsedBan(player, reason, actor, DateTime.Now);
         }
 
         public static ParsedUnBan? FromUnBanGameOutput(string content)

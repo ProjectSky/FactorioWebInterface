@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+//using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -156,7 +156,6 @@ namespace FactorioWebInterface.Models
             Value = value;
         }
 
-        [MaybeNull]
         [JsonProperty(PropertyName = "Value")]
         [JsonPropertyName("Value")]
         public T Value { get; set; } = default!;

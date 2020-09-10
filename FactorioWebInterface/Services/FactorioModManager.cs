@@ -85,8 +85,8 @@ namespace FactorioWebInterface.Services
                     .Select(x => new ModPackMetaData()
                     {
                         Name = x.Name,
-                        CreatedTime = x.CreationTimeUtc,
-                        LastModifiedTime = x.LastWriteTimeUtc
+                        CreatedTime = x.CreationTime,
+                        LastModifiedTime = x.LastWriteTime
                     })
                     .ToArray();
             }
@@ -169,8 +169,8 @@ namespace FactorioWebInterface.Services
                 var modPack = new ModPackMetaData()
                 {
                     Name = modPackDir.Name,
-                    CreatedTime = modPackDir.CreationTimeUtc,
-                    LastModifiedTime = modPackDir.LastWriteTimeUtc
+                    CreatedTime = modPackDir.CreationTime,
+                    LastModifiedTime = modPackDir.LastWriteTime
                 };
 
                 var ev = CollectionChangedData.Add(new[] { modPack });
@@ -213,8 +213,8 @@ namespace FactorioWebInterface.Services
                 var modPack = new ModPackMetaData()
                 {
                     Name = modPackDir.Name,
-                    CreatedTime = modPackDir.CreationTimeUtc,
-                    LastModifiedTime = modPackDir.LastWriteTimeUtc
+                    CreatedTime = modPackDir.CreationTime,
+                    LastModifiedTime = modPackDir.LastWriteTime
                 };
 
                 modPackDir.Delete(true);
@@ -281,8 +281,8 @@ namespace FactorioWebInterface.Services
                 var oldModPack = new ModPackMetaData()
                 {
                     Name = modPackDir.Name,
-                    CreatedTime = modPackDir.CreationTimeUtc,
-                    LastModifiedTime = modPackDir.LastWriteTimeUtc
+                    CreatedTime = modPackDir.CreationTime,
+                    LastModifiedTime = modPackDir.LastWriteTime
                 };
 
                 modPackDir.MoveTo(modPackNewPath);
@@ -291,8 +291,8 @@ namespace FactorioWebInterface.Services
                 var newModpack = new ModPackMetaData()
                 {
                     Name = modPackNewDir.Name,
-                    CreatedTime = modPackNewDir.CreationTimeUtc,
-                    LastModifiedTime = modPackNewDir.LastWriteTimeUtc
+                    CreatedTime = modPackNewDir.CreationTime,
+                    LastModifiedTime = modPackNewDir.LastWriteTime
                 };
 
                 var ev = CollectionChangedData.AddAndRemove(new[] { newModpack }, new[] { oldModPack });
@@ -336,8 +336,8 @@ namespace FactorioWebInterface.Services
                         .Select(x => new ModPackFileMetaData()
                         {
                             Name = x.Name,
-                            CreatedTime = x.CreationTimeUtc,
-                            LastModifiedTime = x.LastWriteTimeUtc,
+                            CreatedTime = x.CreationTime,
+                            LastModifiedTime = x.LastWriteTime,
                             Size = x.Length
                         })
                         .ToArray();
@@ -404,8 +404,8 @@ namespace FactorioWebInterface.Services
                     var fileMetaData = new ModPackFileMetaData()
                     {
                         Name = fileInfo.Name,
-                        CreatedTime = fileInfo.CreationTimeUtc,
-                        LastModifiedTime = fileInfo.LastWriteTimeUtc,
+                        CreatedTime = fileInfo.CreationTime,
+                        LastModifiedTime = fileInfo.LastWriteTime,
                         Size = fileInfo.Length
                     };
 
@@ -420,8 +420,8 @@ namespace FactorioWebInterface.Services
                     var data = new ModPackMetaData()
                     {
                         Name = modPack,
-                        CreatedTime = modPackDir.CreationTimeUtc,
-                        LastModifiedTime = modPackDir.LastWriteTimeUtc
+                        CreatedTime = modPackDir.CreationTime,
+                        LastModifiedTime = modPackDir.LastWriteTime
                     };
 
                     var packEventArgs = CollectionChangedData.Add(new[] { data });
@@ -518,8 +518,8 @@ namespace FactorioWebInterface.Services
                     var fileMetaData = new ModPackFileMetaData()
                     {
                         Name = fileInfo.Name,
-                        CreatedTime = fileInfo.CreationTimeUtc,
-                        LastModifiedTime = fileInfo.LastWriteTimeUtc,
+                        CreatedTime = fileInfo.CreationTime,
+                        LastModifiedTime = fileInfo.LastWriteTime,
                         Size = fileInfo.Length
                     };
 
@@ -532,8 +532,8 @@ namespace FactorioWebInterface.Services
                     var data = new ModPackMetaData()
                     {
                         Name = modPack,
-                        CreatedTime = modPackDir.CreationTimeUtc,
-                        LastModifiedTime = modPackDir.LastWriteTimeUtc
+                        CreatedTime = modPackDir.CreationTime,
+                        LastModifiedTime = modPackDir.LastWriteTime
                     };
 
                     var packEventArgs = CollectionChangedData.Add(new[] { data });
@@ -705,8 +705,8 @@ namespace FactorioWebInterface.Services
                     var fileMetaData = new ModPackFileMetaData()
                     {
                         Name = targetFileInfo.Name,
-                        CreatedTime = targetFileInfo.CreationTimeUtc,
-                        LastModifiedTime = targetFileInfo.LastWriteTimeUtc,
+                        CreatedTime = targetFileInfo.CreationTime,
+                        LastModifiedTime = targetFileInfo.LastWriteTime,
                         Size = targetFileInfo.Length
                     };
 
@@ -719,8 +719,8 @@ namespace FactorioWebInterface.Services
                     var data = new ModPackMetaData()
                     {
                         Name = targetModPack,
-                        CreatedTime = targetModPackDir.CreationTimeUtc,
-                        LastModifiedTime = targetModPackDir.LastWriteTimeUtc
+                        CreatedTime = targetModPackDir.CreationTime,
+                        LastModifiedTime = targetModPackDir.LastWriteTime
                     };
 
                     var packEventArgs = CollectionChangedData.Add(new[] { data });
@@ -838,8 +838,8 @@ namespace FactorioWebInterface.Services
                     var oldFileMetaData = new ModPackFileMetaData()
                     {
                         Name = sourceFileInfo.Name,
-                        CreatedTime = sourceFileInfo.CreationTimeUtc,
-                        LastModifiedTime = sourceFileInfo.LastAccessTimeUtc,
+                        CreatedTime = sourceFileInfo.CreationTime,
+                        LastModifiedTime = sourceFileInfo.LastAccessTime,
                         Size = sourceFileInfo.Length
                     };
 
@@ -849,8 +849,8 @@ namespace FactorioWebInterface.Services
                     var newFileMetaData = new ModPackFileMetaData()
                     {
                         Name = targetFileInfo.Name,
-                        CreatedTime = targetFileInfo.CreationTimeUtc,
-                        LastModifiedTime = targetFileInfo.LastWriteTimeUtc,
+                        CreatedTime = targetFileInfo.CreationTime,
+                        LastModifiedTime = targetFileInfo.LastWriteTime,
                         Size = targetFileInfo.Length
                     };
 
@@ -864,16 +864,16 @@ namespace FactorioWebInterface.Services
                     var oldPackData = new ModPackMetaData()
                     {
                         Name = sourceModPack,
-                        CreatedTime = sourceModPackDir.CreationTimeUtc,
-                        LastModifiedTime = sourceModPackDir.LastWriteTimeUtc
+                        CreatedTime = sourceModPackDir.CreationTime,
+                        LastModifiedTime = sourceModPackDir.LastWriteTime
                     };
 
                     targetModPackDir.Refresh();
                     var newPackData = new ModPackMetaData()
                     {
                         Name = targetModPack,
-                        CreatedTime = targetModPackDir.CreationTimeUtc,
-                        LastModifiedTime = targetModPackDir.LastWriteTimeUtc
+                        CreatedTime = targetModPackDir.CreationTime,
+                        LastModifiedTime = targetModPackDir.LastWriteTime
                     };
 
                     var oldPackEventArgs = CollectionChangedData.Add(new[] { oldPackData });
@@ -975,16 +975,16 @@ namespace FactorioWebInterface.Services
                 var data = new ModPackMetaData()
                 {
                     Name = modPack,
-                    CreatedTime = modPackDirectory.CreationTimeUtc,
-                    LastModifiedTime = modPackDirectory.LastWriteTimeUtc
+                    CreatedTime = modPackDirectory.CreationTime,
+                    LastModifiedTime = modPackDirectory.LastWriteTime
                 };
 
                 fileInfo.Refresh();
                 var fileMetaData = new ModPackFileMetaData()
                 {
                     Name = fileInfo.Name,
-                    CreatedTime = fileInfo.CreationTimeUtc,
-                    LastModifiedTime = fileInfo.LastWriteTimeUtc,
+                    CreatedTime = fileInfo.CreationTime,
+                    LastModifiedTime = fileInfo.LastWriteTime,
                     Size = fileInfo.Length
                 };
 

@@ -23,7 +23,7 @@ namespace FactorioWebInterface.Models
             var cb = new FactorioCommandBuilder();
             var sb = cb.sb;
 
-            sb.Append("/silent-command local s = ServerCommands s = s and s.");
+            sb.Append("/exec local s = ServerCommands s = s and s.");
             sb.Append(functionName);
             sb.Append('(');
 
@@ -37,7 +37,7 @@ namespace FactorioWebInterface.Models
             var cb = new FactorioCommandBuilder();
             var sb = cb.sb;
 
-            sb.Append("/silent-command ");
+            sb.Append("/exec ");
 
             return cb;
         }

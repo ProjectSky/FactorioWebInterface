@@ -168,16 +168,16 @@ export class BansViewModel extends ObservableObject implements IObservableErrors
 
         let datePart = this.date;
         let timePart = this.time;
-        let year = datePart.getUTCFullYear();
-        let month = datePart.getUTCMonth();
-        let day = datePart.getUTCDate();
-        let hours = timePart.getUTCHours();
-        let minutes = timePart.getUTCMinutes();
-        let seconds = timePart.getUTCSeconds();
+        let year = datePart.getFullYear();
+        let month = datePart.getMonth();
+        let day = datePart.getDate();
+        let hours = timePart.getHours();
+        let minutes = timePart.getMinutes();
+        let seconds = timePart.getSeconds();
 
         let dateTime = new Date(0);
-        dateTime.setUTCFullYear(year, month, day);
-        dateTime.setUTCHours(hours, minutes, seconds);
+        dateTime.setFullYear(year, month, day);
+        dateTime.setHours(hours, minutes, seconds);
 
         let ban: Ban = {
             Username: this.username,

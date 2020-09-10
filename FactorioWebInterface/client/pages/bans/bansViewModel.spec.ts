@@ -157,7 +157,7 @@ describe('BansViewModel', function () {
             strict.equal(ban.Username, 'username');
             strict.equal(ban.Reason, 'reason');
             strict.equal(ban.Admin, 'admin');
-            strict.equal(ban.DateTime.toUTCString(), date.toUTCString());
+            strict.equal(ban.DateTime.toString(), date.toString());
             strict.equal(synchronizeWithServers, true);
         });
 
